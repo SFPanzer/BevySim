@@ -30,7 +30,6 @@ pub struct CameraController {
     pub velocity: Vec3,
     pub friction: f32,
     pub mouse_key_cursor_grab: MouseButton,
-    pub keyboard_key_toggle_cursor_grab: KeyCode,
 }
 
 impl Default for CameraController {
@@ -49,8 +48,7 @@ impl Default for CameraController {
             pitch: 0.0,
             velocity: Vec3::ZERO,
             friction: 0.15,
-            mouse_key_cursor_grab: MouseButton::Left,
-            keyboard_key_toggle_cursor_grab: KeyCode::KeyM,
+            mouse_key_cursor_grab: MouseButton::Right,
         }
     }
 }
@@ -58,6 +56,7 @@ impl Default for CameraController {
 fn update_camera_controller(
     time: Res<Time>,
     key_input: Res<ButtonInput<KeyCode>>,
+    mouse_button: Res<ButtonInput<MouseButton>>,
     mut mouse_events: EventReader<MouseMotion>,
     mut query: Query<(&mut Transform, &mut CameraController), With<Camera>>,
 ) {
@@ -94,7 +93,6 @@ fn update_camera_controller(
         if key_input.pressed(controller.key_down) {
             axis_input.y -= 1.0;
         }
-        let cursor_grab = key_input.pressed(controller.keyboard_key_toggle_cursor_grab);
 
         // Apply movement update.
         if axis_input != Vec3::ZERO {
@@ -115,16 +113,15 @@ fn update_camera_controller(
 
         // Handle Mouse Input
         let mut mouse_delta = Vec2::ZERO;
-        if cursor_grab {
+        if mouse_button.pressed(controller.mouse_key_cursor_grab) {
             for mouse_event in mouse_events.read() {
                 mouse_delta += mouse_event.delta;
             }
         } else {
             mouse_events.clear();
         }
-        if mouse_delta != Vec2::ZERO{
-            controller.pitch = (controller.pitch
-                - mouse_delta.y * RADIANS_PER_DOT * controller.sensitivity)
+        if mouse_delta != Vec2::ZERO {
+            controller.pitch = (controller.pitch - mouse_delta.y * RADIANS_PER_DOT * controller.sensitivity)
                 .clamp(-PI / 2., PI / 2.);
             controller.yaw -= mouse_delta.x * RADIANS_PER_DOT * controller.sensitivity;
             transform.rotation =
