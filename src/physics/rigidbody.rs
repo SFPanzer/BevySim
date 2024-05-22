@@ -40,7 +40,7 @@ impl Default for Rigidbody {
 
 fn update_rigidbody(
     time: Res<Time>,
-    mut query: Query<(&mut Transform, &mut Rigidbody), With<Rigidbody>>,
+    mut query: Query<(&mut Transform, &mut Rigidbody)>,
 ) {
     let delta_time = time.delta_seconds();
     for (mut transform, mut rigidbody) in &mut query.iter_mut() {
