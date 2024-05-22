@@ -14,3 +14,7 @@ opt-level = 1
 
 [profile.dev.package."*"]
 opt-level = 3
+
+[lib]
+name = "physics"
+path = "src/physics/mod.rs"

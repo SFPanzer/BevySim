@@ -1,19 +1,19 @@
 #[path = "./runtime/camera_controller.rs"]
 mod camera_controller;
 
-#[path = "./runtime/rigidbody.rs"]
-mod rigidbody;
-
 use bevy::pbr::*;
 use bevy::prelude::*;
-use camera_controller::{CameraController, CameraControllerPlugin};
-use rigidbody::{Rigidbody, RigidBodyPlugin};
+
+use physics::rigidbody::*;
+use physics::distance_joint::*;
+use camera_controller::*;
 
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
         .add_plugins(CameraControllerPlugin)
         .add_plugins(RigidBodyPlugin)
+        .add_plugins(DistanceJointPlugin)
         .add_systems(Startup, start)
         .run();
 }
@@ -37,8 +37,12 @@ fn start(
             transform: Transform::from_xyz(0., 0., 0.),
             ..default()
         },
-         Rigidbody::default()
-        ));
+         Rigidbody::default(),
+         DistanceJoint {
+             local_frame0: Vec3::new(10.0, 0.0, 10.0),
+             local_frame1: Vec3::new(1.0, 0.0, 0.0),
+             ..default()
+         }));
     commands.spawn(DirectionalLightBundle {
         directional_light: DirectionalLight {
             illuminance: 2400.0,
