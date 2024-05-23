@@ -11,4 +11,4 @@
 [游戏物理引擎(四) 约束](https://zhuanlan.zhihu.com/p/143003234)
 [2D 游戏物理引擎 - 求解器](https://www.zhihu.com/question/40135989/answer/3328739914)
 ## 运行说明
-'''cargo run --bin=BevySim --package=BevySim'''
+```cargo run --bin=BevySim --package=BevySim```
