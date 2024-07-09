@@ -17,5 +17,5 @@ opt-level = 1
 opt-level = 3
 
 [lib]
-name = "physics"
-path = "src/physics/mod.rs"
+name = "puma_physics"
+path = "src/puma_physics/mod.rs"
