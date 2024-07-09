@@ -8,6 +8,7 @@ pub struct Rigidbody {
     angular_velocity: Vec3,
     linear_damping: f32,
     angular_damping: f32,
+    // collider: Option<Collision> // TODO!
 }
 
 impl Rigidbody {
