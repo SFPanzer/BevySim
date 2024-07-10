@@ -1,5 +1,4 @@
 pub mod entity;
-pub mod collision;
 pub mod phase;
 
 mod simulation;
