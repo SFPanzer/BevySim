@@ -1,5 +1,6 @@
 #[path = "./runtime/camera_controller.rs"]
 mod camera_controller;
+mod physics;
 
 use rand::Rng;
 use bevy::pbr::*;
