@@ -1,4 +1,5 @@
 use bevy::prelude::*;
+use super::collision::Collider;
 
 #[derive(Component)]
 pub struct Rigidbody {
@@ -8,7 +9,7 @@ pub struct Rigidbody {
     angular_velocity: Vec3,
     linear_damping: f32,
     angular_damping: f32,
-    // collider: Option<Collision> // TODO!
+    collider: Option<Box<dyn Collider>>
 }
 
 impl Rigidbody {
@@ -20,7 +21,8 @@ impl Rigidbody {
             linear_velocity: Vec3::ZERO,
             angular_velocity: Vec3::ZERO,
             linear_damping: 0.0,
-            angular_damping: 0.0
+            angular_damping: 0.0,
+            collider: None
         }
     }
 
@@ -54,6 +56,11 @@ impl Rigidbody {
     #[inline]
     pub fn angular_damping(&self) -> f32 {
         self.angular_damping
+    }
+
+    #[inline]
+    pub fn collider(&self) -> &Option<Box<dyn Collider>> {
+        &self.collider
     }
 
     /// Set the mass of rigid body.
@@ -148,4 +155,9 @@ impl Rigidbody {
         assert!(angular_damping >= 0.0);
         self.angular_damping = angular_damping;
     }  
+
+    #[inline]
+    pub fn set_collider(&mut self, Collider: Option<Box<dyn Collider>>) {
+        self.collider = Collider;
+    }
 }
