@@ -157,7 +157,7 @@ impl Rigidbody {
     }  
 
     #[inline]
-    pub fn set_collider(&mut self, Collider: Option<Box<dyn Collider>>) {
-        self.collider = Collider;
+    pub fn set_collider(&mut self, collider: Option<Box<dyn Collider>>) {
+        self.collider = collider;
     }
 }
